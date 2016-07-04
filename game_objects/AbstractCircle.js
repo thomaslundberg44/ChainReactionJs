@@ -2,7 +2,7 @@
 /**
  * Abstract class circle
  */
-Circle = function(colour, centre) {
+AbstractCircle = function(colour, centre) {
 	this.colour = colour;
 	this.centre = centre;
 	this.radius;
