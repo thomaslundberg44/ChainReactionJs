@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Test Canvas</title>
+	<script type="text/javascript" src="../AbstractCircle.js"></script>
+	<script type="text/javascript" src="../Ball.js"></script>
+	<script type="text/javascript" src="../Point.js"></script>
+	<script type="text/javascript">
+
+		function drawBalls() {
+			var canvas = document.getElementById("test_canvas");
+			var context = canvas.getContext("2d");
+			var ball1 = new Ball(new Point(50,50), 1, 1, "#FF0000");
+			var ball2 = new Ball(new Point(100,100),1,1,"#00FF00");
+			var ball3 = new Ball(new Point(300,150),1,1,"#0000FF");
+			ball1.draw(context);
+			ball2.draw(context);
+			ball3.draw(context);
+		}
+
+	</script>
+</head>
+<body onload="drawBalls()">
+	<canvas id="test_canvas" width="600px" height="400px"></canvas>
+</body>
+</html>

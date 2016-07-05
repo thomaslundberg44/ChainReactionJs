@@ -1,6 +1,9 @@
 var BALL_RADIUS = 6;
 
 Ball = function (centre, dx, dy, colour) {
+
+	AbstractCircle.call(this, colour, centre);
+
 	this.centre = centre;
 	this.radius = BALL_RADIUS;
 	this.directionX = dx;
@@ -22,4 +25,6 @@ Ball = function (centre, dx, dy, colour) {
 	this.moveY = function() {
 		this.y += this.directionY;
 	}
+
+	console.log("Created ball, dirX: "+this.directionX+", dirY: "+this.directionY);
 }
