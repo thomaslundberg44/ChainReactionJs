@@ -19,12 +19,10 @@ Ball = function (centre, dx, dy, colour) {
 	}
 
 	this.moveX = function() {
-		this.x += this.directionX;
+		this.centre.x += this.directionX;
 	}
 
 	this.moveY = function() {
-		this.y += this.directionY;
+		this.centre.y += this.directionY;
 	}
-
-	console.log("Created ball, dirX: "+this.directionX+", dirY: "+this.directionY);
 }
