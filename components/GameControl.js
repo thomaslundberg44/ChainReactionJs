@@ -2,6 +2,7 @@
 var FPS = 60;
 
 var ballControl;
+var explosionControl;
 var levelControl;
 var canvas;
 var context;
@@ -13,9 +14,17 @@ function startGame() {
 
 	levelControl = new LevelControl();
 	ballControl = new BallControl(canvas, context, levelControl.numberOfBalls);
+	explosionControl = new ExplosionControl(canvas, context);
 
 	ballControl.createBalls();
 
-	window.setInterval("ballControl.drawBalls()", 1000/FPS);
+	window.setInterval("paintCanvas()", 1000/FPS);
+
+	canvas.onclick=function() { explosionControl.mouseClicked(new Point(20,20)); };
+}
+
+function paintCanvas() {
+	ballControl.drawBalls();
+	explosionControl.drawExplosions();
 }
 
