@@ -4,9 +4,6 @@ var MIN_EXPLOSION_RADIUS = 4;
 
 var GROWING = 0, WAITING = 1, SHRINKING = 2, FINISHED = 3;
 
-var state;
-var radius;
-
 var endWaitTime;
 
 Explosion = function(centre, explodeCount, colour) {
@@ -15,29 +12,32 @@ Explosion = function(centre, explodeCount, colour) {
 
 	this.explodeCount = explodeCount;
 	this.score = calcScore(this.explodeCount);
-	radius = MIN_EXPLOSION_RADIUS;
+	this.radius = MIN_EXPLOSION_RADIUS;
 
-	state = GROWING;
+	this.state = GROWING;
 
 	this.animate = function() {
-		if(state == GROWING) {
-			if(radius < MAX_EXPLOSION_RADIUS) {
-				radius++;
+		if(this.state == GROWING) {
+			console.log("Explosion growing");
+			if(this.radius < MAX_EXPLOSION_RADIUS) {
+				this.radius++;
 			} else {
-				state = WAITING;
+				this.state = WAITING;
 				endWaitTime = new Date().getTime()+2000;
 			}
-		} else if(state == WAITING) {
+		} else if(this.state == WAITING) {
+			console.log("Explosion waiting");
 			var currentTime = new Date().getTime();
 			if(currentTime >= endWaitTime) {
-				state = SHRINKING;
+				this.state = SHRINKING;
 			}
 			// else wait
-		} else {
-			if(radius > MIN_EXPLOSION_RADIUS) {
-				radius -= 2;
+		} else if(this.state == SHRINKING) {
+			console.log("Explosion shrinking");
+			if(this.radius > MIN_EXPLOSION_RADIUS) {
+				this.radius -= 2;
 			} else {
-				state = FINISHED;
+				this.state = FINISHED;
 				console.log("Explosion finished!");
 			}
 		}
