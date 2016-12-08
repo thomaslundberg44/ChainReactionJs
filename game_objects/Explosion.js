@@ -18,7 +18,6 @@ Explosion = function(centre, explodeCount, colour) {
 
 	this.animate = function() {
 		if(this.state == GROWING) {
-			console.log("Explosion growing");
 			if(this.radius < MAX_EXPLOSION_RADIUS) {
 				this.radius++;
 			} else {
@@ -26,19 +25,16 @@ Explosion = function(centre, explodeCount, colour) {
 				endWaitTime = new Date().getTime()+2000;
 			}
 		} else if(this.state == WAITING) {
-			console.log("Explosion waiting");
 			var currentTime = new Date().getTime();
 			if(currentTime >= endWaitTime) {
 				this.state = SHRINKING;
 			}
 			// else wait
 		} else if(this.state == SHRINKING) {
-			console.log("Explosion shrinking");
 			if(this.radius > MIN_EXPLOSION_RADIUS) {
 				this.radius -= 2;
 			} else {
 				this.state = FINISHED;
-				console.log("Explosion finished!");
 			}
 		}
 	}

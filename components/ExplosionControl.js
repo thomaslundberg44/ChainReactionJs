@@ -22,7 +22,7 @@ ExplosionControl = function(canvas, context) {
 	this.drawExplosions = function() {
 		for(var i = 0; i < explosionList.length; i++) {
 			if(explosionList[i].state == FINISHED) {
-				explosionList.splice(i,1);
+				explosionList.splice(i--,1);
 			} else {
 				explosionList[i].animate();
 				explosionList[i].draw(context);

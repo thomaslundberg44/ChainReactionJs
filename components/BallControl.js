@@ -3,10 +3,11 @@ var COLOURS = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"]
 
 var ballList = [];
 
-BallControl = function(canvas, context, numBalls) {
+BallControl = function(canvas, context, numBalls, explosionControl) {
 	this.canvas = canvas;
 	this.context = context;
 	this.numBalls = numBalls;
+	this.explosionControl = explosionControl;
 
 	this.createBalls = function() {
 		for(var i = 0; i < this.numBalls; i++) {
@@ -35,6 +36,9 @@ BallControl = function(canvas, context, numBalls) {
 	this.animateBalls = function() {
 		for(var i = 0; i < ballList.length; i++) {
 			this.checkForCollision(ballList[i]);
+			if(this.checkForExplosionCollision(ballList[i])) {
+				ballList.splice(i--, 1);
+			}
 			ballList[i].moveX();
 			ballList[i].moveY();
 		}
@@ -48,6 +52,17 @@ BallControl = function(canvas, context, numBalls) {
 		if(ball.centre.y <= (0+ball.radius) || (ball.centre.y+ball.radius) >= this.canvas.height) {
 			ball.changeDirectionY();
 		}
+	}
+
+	this.checkForExplosionCollision = function(ball) {
+		for(var i = 0; i < explosionList.length; i++) {
+			var distance = ball.centre.getDistance(explosionList[i].centre);
+			if(distance < ((BALL_RADIUS/2) + (explosionList[i].radius/2))) {
+				this.explosionControl.createExplosion(ball.centre, getRandomColour());
+				return true;
+			}
+		}
+		return false;
 	}
 }
 

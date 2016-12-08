@@ -13,8 +13,8 @@ function startGame() {
 	context = canvas.getContext("2d");
 
 	levelControl = new LevelControl();
-	ballControl = new BallControl(canvas, context, levelControl.numberOfBalls);
 	explosionControl = new ExplosionControl(canvas, context);
+	ballControl = new BallControl(canvas, context, levelControl.numberOfBalls, explosionControl);
 
 	ballControl.createBalls();
 
@@ -30,8 +30,8 @@ function paintCanvas() {
 }
 
 function getClickPosition(e) {
-	var posX = e.clientX;
-	var posY = e.clientY;
+	var posX = e.offsetX;
+	var posY = e.offsetY;
 
 	explosionControl.mouseClicked(new Point(posX, posY));
 }
