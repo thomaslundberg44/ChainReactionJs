@@ -38,6 +38,26 @@ Explosion = function(centre, explodeCount, colour) {
 			}
 		}
 	}
+
+	this.getExplodeChainLength = function() {
+		return this.explodeCount;
+	}
+
+	// Override draw method to include score on top of circle
+	this.draw = function(context) {
+		// draw circle
+		context.beginPath();
+		context.arc(centre.x, centre.y, this.radius, 0, 2 * Math.PI, false);
+      	context.fillStyle = this.colour;
+      	context.fill();
+
+      	// draw score
+      	if(this.score > 0 ) {
+      		context.font="20px Georgia";
+	      	context.fillStyle = "#FFFFFF";
+			context.fillText(this.score,this.centre.x,this.centre.y);
+      	}
+	}
 }
 
 function calcScore(explodeCount) {

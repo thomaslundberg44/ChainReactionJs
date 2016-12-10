@@ -1,5 +1,8 @@
 
 var COLOURS = ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF"];
+var TRANSPARENT_COLOURS = [	'rgba(255,0,0, 0.5)', 'rgba(0,255,0, 0.5)', 'rgba(0,0,255, 0.5)',
+							'rgba(255,255,0, 0.5)', 'rgba(0,255,255, 0.5)', 'rgba(255,0,255, 0.5)'];
+
 
 var ballList = [];
 
@@ -35,12 +38,12 @@ BallControl = function(canvas, context, numBalls, explosionControl) {
 
 	this.animateBalls = function() {
 		for(var i = 0; i < ballList.length; i++) {
+			ballList[i].moveX();
+			ballList[i].moveY();
 			this.checkForCollision(ballList[i]);
 			if(this.checkForExplosionCollision(ballList[i])) {
 				ballList.splice(i--, 1);
 			}
-			ballList[i].moveX();
-			ballList[i].moveY();
 		}
 	}
 
@@ -57,8 +60,9 @@ BallControl = function(canvas, context, numBalls, explosionControl) {
 	this.checkForExplosionCollision = function(ball) {
 		for(var i = 0; i < explosionList.length; i++) {
 			var distance = ball.centre.getDistance(explosionList[i].centre);
-			if(distance < ((BALL_RADIUS/2) + (explosionList[i].radius/2))) {
-				this.explosionControl.createExplosion(ball.centre, getRandomColour());
+			if(distance < (BALL_RADIUS + explosionList[i].radius)) {
+				this.explosionControl.createExplosion(ball.centre, 
+					explosionList[i].getExplodeChainLength(), getRandomTransparentColour());
 				return true;
 			}
 		}
@@ -68,4 +72,9 @@ BallControl = function(canvas, context, numBalls, explosionControl) {
 
 function getRandomColour() {
 	return COLOURS[Math.floor(Math.random() * COLOURS.length)];
+}
+
+
+function getRandomTransparentColour() {
+	return TRANSPARENT_COLOURS[Math.floor(Math.random() * TRANSPARENT_COLOURS.length)];
 }
